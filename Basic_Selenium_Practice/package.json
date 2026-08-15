@@ -1,0 +1,23 @@
+{
+  "name": "batch19",
+  "version": "1.0.0",
+  "description": "This is testing package.",
+  "main": "base.js",
+  "type": "module",
+  "scripts": {
+    "test": "node base.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/humayrasiddika22/OstadAutomationPractice.git"
+  },
+  "author": "Humayra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/humayrasiddika22/OstadAutomationPractice/issues"
+  },
+  "homepage": "https://github.com/humayrasiddika22/OstadAutomationPractice#readme",
+  "dependencies": {
+    "selenium-webdriver": "^4.47.0"
+  }
+}
