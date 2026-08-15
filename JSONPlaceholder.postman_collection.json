@@ -1,0 +1,458 @@
+{
+  "info": {
+    "_postman_id": "ef6910fb-598c-4b04-9fa0-38143ca7a7bd",
+    "name": "JSONPlaceholder",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54264475",
+    "_collection_link": "https://go.postman.co/collection/54264475-ef6910fb-598c-4b04-9fa0-38143ca7a7bd?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "All posts",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "console.log(\"This is post response\");\r",
+              "\r",
+              "const response = pm.response.json(); \r",
+              "\r",
+              "console.log(`this is actual result in json ${response}`);\r",
+              "pm.environment.set(\"id\", response[0].id); \r",
+              "pm.environment.set(\"title\", response[0].title); \r",
+              "pm.environment.set(\"body\", response[0].body);\r",
+              "\r",
+              "pm.test(\"1. Response should be ok and the status code is 200\",function (){ \r",
+              "pm.response.to.have.status(200); \r",
+              "});\r",
+              "\r",
+              "pm.test(\"2. Response should not have a body\", function () { \r",
+              "pm.response.to.not.have.body(\"error\"); \r",
+              "});\r",
+              "\r",
+              "pm.test(\"3. Post should be at least 100\", () => { \r",
+              "pm.expect(response.length).to.be.at.least(100); \r",
+              "});\r",
+              " \r",
+              "pm.test(\"4. First post ID should be 1\", () => { \r",
+              "pm.expect(response[0].id).to.eql(1); \r",
+              "});\r",
+              "\r",
+              "pm.test(\"5. First post ID should not be equal to 2\", () => { \r",
+              "pm.expect(response[0].id).to.not.eql(2); \r",
+              "});\r",
+              "\r",
+              "pm.test(\"6. Status is successful\", () => { \r",
+              "pm.expect(pm.response.code === 200).to.be.true; \r",
+              "});\r",
+              "\r",
+              "pm.test(\"7. Status is not 404\", () => { \r",
+              "pm.expect(pm.response.code === 404).to.be.false; \r",
+              "});\r",
+              "\r",
+              "pm.test(\"8. Title is not contains 'This'\", () => { \r",
+              "pm.expect(response[5].title).to.not.include(\"This\"); \r",
+              "});\r",
+              "\r",
+              "pm.test(\"9. Response has title property\", () => { \r",
+              "pm.expect(response[99]).to.have.property(\"title\"); \r",
+              "});\r",
+              " \r",
+              "pm.test(\"10. Post should be at least 5\", () => { \r",
+              "pm.expect(response.length).to.be.at.least(5); \r",
+              "});\r",
+              "\r",
+              "pm.test(\"11. Title contains 'et ea vero'\", () => { \r",
+              "pm.expect(response[10].title).to.include(\"et ea vero\"); \r",
+              "});\r",
+              "\r",
+              "pm.test(\"12. Last post ID should be 100\", () => {\r",
+              "pm.expect(response[99].id).to.equal(100);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"13. First post ID is a number\", () => {\r",
+              "pm.expect(response[0].id).to.be.a(\"number\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"14. First post title is a string\", () => {\r",
+              "pm.expect(response[0].title).to.be.a(\"string\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"15. Response is an array\", () => {\r",
+              "pm.expect(response).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"16. Should return 100 posts\", () => {\r",
+              "pm.expect(response).to.have.length(100);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"17. Title is not empty\", () => {\r",
+              "pm.expect(response[22].title).to.not.be.empty;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"18. Last ID is above 90\", () => {\r",
+              "pm.expect(response[99].id).to.be.above(90);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"19. First ID is below 10\", () => {\r",
+              "pm.expect(response[0].id).to.be.below(10);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"20. Title starts with 'sunt'\", () => {\r",
+              "pm.expect(response[0].title).to.match(/^sunt/);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "console.log(\"Hi, this is pre request\");\r",
+              "pm.environment.set(\"baseUrl\", \"https://jsonplaceholder.typicode.com\");"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Retrieving posts",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.environment.set(\"id\", response[4].id); \r",
+              "pm.environment.set(\"title\", response[4].title);\r",
+              "pm.environment.set(\"body\", response[4].body);\r",
+              " \r",
+              "pm.test(\"1. Post should not be more 100\", () => { \r",
+              "pm.expect(response.length).to.not.at.least(101); \r",
+              "});\r",
+              "\r",
+              "pm.test(\"2. Id is 5\", () => {\r",
+              "pm.expect(response[4].id).to.eql(pm.environment.get(\"id\"));\r",
+              "});\r",
+              "\r",
+              "pm.test(\"3. The ID is between 1 and 10\", () => {\r",
+              "pm.expect(response[4].id).to.be.within(1, 10);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"4. Should return 100 posts\", () => {\r",
+              "pm.expect(response).to.have.length(100);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"5. Title is not empty\", () => {\r",
+              "pm.expect(response[4].title).to.not.be.empty;\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "console.log(\"Hi, this is pre request\");"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update posts",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const oldTitle = pm.environment.get(\"title\");\r",
+              "let recent = \"Nesciunt quid oderunt\";\r",
+              "const newTitleVariable = `Update ${Date.now()}; ${recent}`;\r",
+              "pm.environment.set(\"updatedNewTitle\", newTitleVariable);\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"1. Status code is 200\", () => {\r",
+              "pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"2. Title updated\", () => {\r",
+              "pm.expect(response.title).to.include(\"oderunt\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"3. UserId is 1\", () => {\r",
+              "pm.expect(response.userId).to.eql(1);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"4. Id is 5\", () => {\r",
+              "pm.expect(response.id).to.eql(pm.environment.get(\"id\"));\r",
+              "});\r",
+              "\r",
+              "pm.test(\"5. Body contains 'aut fugiat sit autem sed'\", () => {\r",
+              "pm.expect(response.body).to.include(\"aut fugiat sit autem sed\");\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n        \"userId\": 1,\r\n        \"id\": 5,\r\n        \"title\": \"{{updatedNewTitle}}\",\r\n        \"body\": \"repudiandae veniam quaerat sunt sed\\nalias aut fugiat sit autem sed est\\nvoluptatem omnis possimus esse voluptatibus quis\\nest aut tenetur dolor neque\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts/{{id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create posts",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();\r",
+              "pm.environment.set(\"id\", response.id);\r",
+              "\r",
+              "pm.test(\"1. Status code is 201\", () => {\r",
+              "pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"2. Title is correct\", () => {\r",
+              "pm.expect(response.title).to.eql(pm.environment.get(\"newTitle\"));\r",
+              "});\r",
+              "\r",
+              "pm.test(\"3. Body is correct\", () => {\r",
+              "pm.expect(response.body).to.eql(pm.environment.get(\"newBody\"));\r",
+              "});\r",
+              "\r",
+              "pm.test(\"4. UserId is 1\", () => {\r",
+              "pm.expect(response.userId).to.eql(1);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"5. Id is 101\", () => {\r",
+              "pm.expect(response.id).to.eql(pm.environment.get(\"id\"));\r",
+              "});\r",
+              "\r",
+              "pm.test(\"6. Should be 101 posts\", () => {\r",
+              "pm.expect(response.id).to.equal(101);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"7. Last post ID is a number\", () => {\r",
+              "pm.expect(response.id).to.be.a(\"number\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"8. Last post title is a string\", () => {\r",
+              "pm.expect(response.title).to.be.a(\"string\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"9. Response is an object\", () => {\r",
+              "pm.expect(response).to.be.an(\"object\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"10. Response can not empty\", () => {\r",
+              "pm.expect(response).to.not.be.empty;\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const newTitle = `My New Post ${Date.now()}`;\r",
+              "const newBody = `This is my content ${Date.now()}`;\r",
+              "pm.environment.set(\"newTitle\", newTitle);\r",
+              "pm.environment.set(\"newBody\", newBody);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"userId\": 1,\r\n    \"title\": \"{{newTitle}}\",\r\n    \"body\": \"{{newBody}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete posts",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"1. Status code is 200\", () => {\r",
+              "pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"2. Response should empty\", () => {\r",
+              "pm.expect(response).to.be.empty;\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts/101",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts",
+            "101"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
