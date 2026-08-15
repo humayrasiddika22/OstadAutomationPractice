@@ -28,6 +28,7 @@ class numberClass
     }
 }
 
+// Array with values
 let array=[10,55,2,4,19,68,0,14,24];
 
 const result1=new arrayClass();
