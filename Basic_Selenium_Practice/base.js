@@ -9,12 +9,12 @@ class Base {
         //locators
 
         // Login / Signup page locator
-        this.loginLink = By.xpath("/html/body/header/div/div/div/div[2]/div/ul/li[4]/a");
+        this.loginLink = By.xpath("//a[contains(text(),'Signup / Login')]");
 
         // Log in info locators
         this.newUserName = By.name("name");
-        this.newUserMail = By.xpath("/html/body/section/div/div/div[3]/div/form/input[3]");
-        this.signUP = By.xpath("/html/body/section/div/div/div[3]/div/form/button");
+        this.newUserMail = By.xpath("//div[@class='signup-form']//input[@name='email']");
+        this.signUP = By.xpath("//div[@class='signup-form']//button[@type='submit']");
 
         // Information setup locators
         this.gender = By.id("id_gender2");
@@ -27,22 +27,22 @@ class Base {
         this.city = By.id("city");
         this.zipcode = By.id("zipcode");
         this.mobileNumber = By.id("mobile_number");
-        this.createAccount = By.xpath("/html/body/section/div/div/div/div[1]/form/button");
+        this.createAccount = By.xpath("//button[contains(text(),'Create Account')]");
 
         // Continue account setup locator
-        this.continueLogin = By.xpath("/html/body/section/div/div/div/div/a");
+        this.continueLogin = By.xpath("//a[contains(text(),'Continue')]");
 
         // Logout account locator
-        this.logout = By.xpath("/html/body/header/div/div/div/div[2]/div/ul/li[4]/a");
+        this.logout = By.xpath("//a[contains(text(),'Logout')]");
 
         // Login account locators
         this.userMail = By.name("email");
         this.userPassword = By.name("password");
-        this.login = By.xpath("/html/body/section/div/div/div[1]/div/form/button");
+        this.login = By.xpath("//div[@class='login-form']//button[@type='submit']");
 
         // Delete account locators
-        this.deleteAccount = By.xpath("/html/body/header/div/div/div/div[2]/div/ul/li[5]/a");
-        this.continueDelete = By.xpath("/html/body/section/div/div/div/div/a");
+        this.deleteAccount = By.xpath("//a[contains(text(),'Delete Account')]");
+        this.continueDelete = By.xpath("//a[contains(text(),'Continue')]");
     }
 
     //Browser open
@@ -52,43 +52,52 @@ class Base {
 
         // Maximize the size
         await this.driver.manage().window().maximize();
-        
-        // Go to the login / signup page
-        await this.driver.findElement(this.loginLink).click();
+    }
 
-        // Signup user account
-        await this.driver.findElement(this.newUserName).sendKeys("SQA Tester");
-        await this.driver.findElement(this.newUserMail).sendKeys("acbd@gmail.com");
+    // Signup user account
+    async signUpAccount(username, useremail){
+        await this.driver.findElement(this.loginLink).click(); // Go to the login or signup page
+
+        await this.driver.findElement(this.newUserName).sendKeys(username);
+        await this.driver.findElement(this.newUserMail).sendKeys(useremail);
         await this.driver.findElement(this.signUP).click();
+    }
 
-        // Information setup
+    // Information setup
+    async infoSetup(pass, fName, lNmae, address, countryName, stateName, cityName, zip, phoneNumber){
         await this.driver.findElement(this.gender).click();
-        await this.driver.findElement(this.setupPassword).sendKeys("OstadSQA_Batch19");
-        await this.driver.findElement(this.name1).sendKeys("SQA");
-        await this.driver.findElement(this.name2).sendKeys("Tester");
-        await this.driver.findElement(this.address1).sendKeys("Batch-19, SQA, Ostad.");
-        await this.driver.findElement(this.country).sendKeys("United States");
-        await this.driver.findElement(this.state).sendKeys("New York");
-        await this.driver.findElement(this.city).sendKeys("Albany");
-        await this.driver.findElement(this.zipcode).sendKeys("12222");
-        await this.driver.findElement(this.mobileNumber).sendKeys("+15185550199");
+        await this.driver.findElement(this.setupPassword).sendKeys(pass);
+        await this.driver.findElement(this.name1).sendKeys(fName);
+        await this.driver.findElement(this.name2).sendKeys(lNmae);
+        await this.driver.findElement(this.address1).sendKeys(address);
+        await this.driver.findElement(this.country).sendKeys(countryName);
+        await this.driver.findElement(this.state).sendKeys(stateName);
+        await this.driver.findElement(this.city).sendKeys(cityName);
+        await this.driver.findElement(this.zipcode).sendKeys(zip);
+        await this.driver.findElement(this.mobileNumber).sendKeys(phoneNumber);
         await this.driver.findElement(this.createAccount).click();
 
         await this.driver.findElement(this.continueLogin).click();
+    }
 
-        // Logout account
+    // Logout account
+    async logoutAccount(){
         await this.driver.findElement(this.logout).click();
+    }
 
-        // Log in account
+    // Log in account
+    async loginAccount(){
         await this.driver.findElement(this.userMail).sendKeys("acbd@gmail.com");
         await this.driver.findElement(this.userPassword).sendKeys("OstadSQA_Batch19");
         await this.driver.findElement(this.login).click();
-
-        // Delete account
-        await this.driver.findElement(this.deleteAccount).click();
-        await this.driver.findElement(this.continueDelete).click();
     }
 
+    // Delete account
+    async DeleteUserAccount(){
+        await this.driver.findElement(this.deleteAccount).click();
+        await this.driver.findElement(this.continueDelete).click(); 
+    }
+        
     //Browser close
     async browserClose(){
         await this.driver.quit();
@@ -97,4 +106,9 @@ class Base {
 
 const page = new Base();
 await page.browserOpen('https://automationexercise.com/');
+await page.signUpAccount("SQA Tester", "acbd@gmail.com");
+await page.infoSetup("OstadSQA_Batch19", "SQA", "Tester", "Batch-19, SQA, Ostad.", "United States", "New York", "Albany", "12222", "+15185550199");
+await page.logoutAccount();
+await page.loginAccount();
+await page.DeleteUserAccount();
 await page.browserClose();
